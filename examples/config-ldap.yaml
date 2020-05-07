@@ -11,20 +11,20 @@ connectors:
   name: OpenLDAP
   id: ldap
   config:
-    host: localhost:10389
+    host: localhost:389
 
     # No TLS for this setup.
     insecureNoSSL: true
 
     # This would normally be a read-only user.
-    bindDN: cn=admin,dc=example,dc=org
-    bindPW: admin
+    bindDN: cn=admin,dc=planetexpress,dc=com
+    bindPW: GoodNewsEveryone
 
     usernamePrompt: Email Address
 
     userSearch:
-      baseDN: ou=People,dc=example,dc=org
-      filter: "(objectClass=person)"
+      baseDN: ou=People,dc=planetexpress,dc=com
+      filter: "(objectClass=inetOrgPerson)"
       username: mail
       # "DN" (case sensitive) is a special attribute name. It indicates that
       # this value should be taken from the entity's DN not an attribute on
@@ -34,8 +34,8 @@ connectors:
       nameAttr: cn
 
     groupSearch:
-      baseDN: ou=Groups,dc=example,dc=org
-      filter: "(objectClass=groupOfNames)"
+      baseDN: ou=people,dc=planetexpress,dc=com
+      filter: "(objectClass=Group)"
 
       userMatchers:
         # A user is a member of a group when their DN matches
@@ -46,9 +46,12 @@ connectors:
       # The group name should be the "cn" value.
       nameAttr: cn
 
+logger:
+  level: "debug"
+
 staticClients:
-- id: example-app
+- id: IDAC-APP
   redirectURIs:
   - 'http://127.0.0.1:5555/callback'
-  name: 'Example App'
-  secret: ZXhhbXBsZS1hcHAtc2VjcmV0
+  name: 'IDAC-APP'
+  secret: K.QY9wP&fcg*5]D

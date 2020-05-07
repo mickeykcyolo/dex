@@ -200,7 +200,7 @@ func cmd() *cobra.Command {
 	c.Flags().StringVar(&tlsCert, "tls-cert", "", "X509 cert file to present when serving HTTPS.")
 	c.Flags().StringVar(&tlsKey, "tls-key", "", "Private key for the HTTPS cert.")
 	c.Flags().StringVar(&rootCAs, "issuer-root-ca", "", "Root certificate authorities for the issuer. Defaults to host certs.")
-	c.Flags().BoolVar(&debug, "debug", false, "Print all request and responses from the OpenID Connect issuer.")
+	c.Flags().BoolVar(&debug, "debug", true, "Print all request and responses from the OpenID Connect issuer.")
 	return &c
 }
 
