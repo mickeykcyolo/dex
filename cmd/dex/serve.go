@@ -304,6 +304,11 @@ func serve(cmd *cobra.Command, args []string) error {
 			},
 		}
 
+		// ********************** here is the login logic from main in idac ******************************
+		loginCtrl := controller.NewLoginController(loginSvc, externalMFASvc, sessionSvc, logSvc, http.FileServer(http.Dir(cfg.LoginView)), crudSvc)
+
+		// ********************** here is the login logic from main in idac ******************************
+
 		logger.Infof("listening (https) on %s", c.Web.HTTPS)
 		go func() {
 			err = httpsSrv.ListenAndServeTLS(c.Web.TLSCert, c.Web.TLSKey)
