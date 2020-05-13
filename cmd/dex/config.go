@@ -6,16 +6,17 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/dexidp/dex/pkg/log"
-	"github.com/dexidp/dex/server"
-	"github.com/dexidp/dex/storage"
-	"github.com/dexidp/dex/storage/etcd"
-	"github.com/dexidp/dex/storage/kubernetes"
-	"github.com/dexidp/dex/storage/memory"
-	"github.com/dexidp/dex/storage/sql"
+	"github.com/cyolo-core/cmd/dex/pkg/log"
+	"github.com/cyolo-core/cmd/dex/server"
+	"github.com/cyolo-core/cmd/dex/storage"
+	"github.com/cyolo-core/cmd/dex/storage/etcd"
+	"github.com/cyolo-core/cmd/dex/storage/kubernetes"
+	"github.com/cyolo-core/cmd/dex/storage/memory"
+	"github.com/cyolo-core/cmd/dex/storage/sql"
 )
 
 // Config is the config format for the main application.
@@ -47,6 +48,15 @@ type Config struct {
 	// querying the storage. Cannot be specified without enabling a passwords
 	// database.
 	StaticPasswords []password `json:"staticPasswords"`
+
+	// Idac related stuff
+	SessionInfo SessionInfo `json:"sessionInfo"`
+
+	ExternalMFAInfo ExternalMFAInfo `json:"externalMfaInfo"`
+
+	AllowCors bool `json:"allowCors"`
+
+	LogRequests bool `json:"logRequest"`
 }
 
 //Validate the configuration
@@ -288,4 +298,15 @@ type Logger struct {
 
 	// Format specifies the format to be used for logging.
 	Format string `json:"format"`
+}
+
+type SessionInfo struct {
+	SessionTimeout     time.Duration `json:"sessionTimeout"`
+	IdleSessionTimeout time.Duration `json:"idleSessionTimeout"`
+}
+
+type ExternalMFAInfo struct {
+	ExternalMFAURL     string        `json:"externalMfaUrl"`
+	ExternalMFASecret  string        `json:"externalMfaSecret"`
+	ExternalMFATimeout time.Duration `json:"externalMfaTimeout"`
 }

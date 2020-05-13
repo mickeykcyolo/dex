@@ -10,11 +10,11 @@ import (
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 
-	"github.com/dexidp/dex/api"
-	"github.com/dexidp/dex/pkg/log"
-	"github.com/dexidp/dex/server/internal"
-	"github.com/dexidp/dex/storage"
-	"github.com/dexidp/dex/storage/memory"
+	"github.com/cyolo-core/cmd/dex/api"
+	"github.com/cyolo-core/cmd/dex/pkg/log"
+	"github.com/cyolo-core/cmd/dex/server/internal"
+	"github.com/cyolo-core/cmd/dex/storage"
+	"github.com/cyolo-core/cmd/dex/storage/memory"
 )
 
 // apiClient is a test gRPC client. When constructed, it runs a server in

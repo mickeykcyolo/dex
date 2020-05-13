@@ -10,7 +10,7 @@ import (
 	_ "github.com/lib/pq"
 	_ "github.com/mattn/go-sqlite3"
 
-	"github.com/dexidp/dex/pkg/log"
+	"github.com/cyolo-core/cmd/dex/pkg/log"
 )
 
 // flavor represents a specific SQL implementation, and is used to translate query strings
@@ -137,6 +137,10 @@ type conn struct {
 
 func (c *conn) Close() error {
 	return c.db.Close()
+}
+
+func (c *conn) GetDBIfExists() *sql.DB {
+	return c.db
 }
 
 // conn implements the same method signatures as encoding/sql.DB.

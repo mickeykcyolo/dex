@@ -2,8 +2,8 @@ package service
 
 import (
 	"errors"
-	"github.com/cyolo-core/cmd/idac/model"
-	"github.com/cyolo-core/cmd/idac/repo"
+	"github.com/cyolo-core/cmd/dex/model"
+	"github.com/cyolo-core/cmd/dex/repo"
 	"regexp"
 )
 

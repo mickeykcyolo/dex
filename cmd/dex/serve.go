@@ -6,6 +6,10 @@ import (
 	"crypto/x509"
 	"errors"
 	"fmt"
+	"github.com/cyolo-core/cmd/dex/controller"
+	"github.com/cyolo-core/cmd/dex/repo"
+	"github.com/cyolo-core/cmd/dex/service"
+	"github.com/cyolo-core/pkg/cmd/channel"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -23,10 +27,10 @@ import (
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/reflection"
 
-	"github.com/dexidp/dex/api"
-	"github.com/dexidp/dex/pkg/log"
-	"github.com/dexidp/dex/server"
-	"github.com/dexidp/dex/storage"
+	"github.com/cyolo-core/cmd/dex/api"
+	"github.com/cyolo-core/cmd/dex/pkg/log"
+	"github.com/cyolo-core/cmd/dex/server"
+	"github.com/cyolo-core/cmd/dex/storage"
 )
 
 func commandServe() *cobra.Command {
@@ -70,7 +74,7 @@ func serve(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("invalid config: %v", err)
 	}
 	if c.Logger.Level != "" {
-		logger.Infof("config using log level: %s", c.Logger.Level)
+		logger.Info("config using log level: %s", c.Logger.Level)
 	}
 	if err := c.Validate(); err != nil {
 		return err
@@ -304,8 +308,71 @@ func serve(cmd *cobra.Command, args []string) error {
 			},
 		}
 
-		// ********************** here is the login logic from main in idac ******************************
-		loginCtrl := controller.NewLoginController(loginSvc, externalMFASvc, sessionSvc, logSvc, http.FileServer(http.Dir(cfg.LoginView)), crudSvc)
+		// ********************** here is the login logic from idac's main ******************************
+
+		// open local database:
+		db := s.GetDBIfExists()
+		if db != nil {
+			logger.Error("failed to get the current database")
+			os.Exit(2)
+		}
+
+		//var logsRepo repo.LogEntryRepository
+
+		// create repositories:
+		usersRepo := repo.NewSQLUserRepository(db)
+		ldapsRepo := repo.NewSQLLDAPRepository(db)
+		logsRepo := repo.NewSQLLogEntryRepository(db)
+		domainsRepo := repo.NewSQLDomainRepository(db)
+		mappingsRepo := repo.NewSQLMappingRepository(db, domainsRepo)
+		policiesRepo := repo.NewSQLPolicyRepository(db, mappingsRepo, usersRepo)
+		licensesRepo := repo.NewSQLLicenseRepository(db)
+
+		// create services:
+		logSvc := service.NewLogService(logsRepo)
+		crudSvc := service.NewCrudService(domainsRepo, ldapsRepo, mappingsRepo, policiesRepo, usersRepo, logsRepo, licensesRepo, nil, nil, nil)
+		loginSvc := service.NewLoginService(usersRepo, ldapsRepo)
+		sessionSvc := service.NewInMemSessionService(c.SessionInfo.SessionTimeout, c.SessionInfo.IdleSessionTimeout)
+		externalMFASvc := service.NewCyoloExternalMFAService(c.ExternalMFAInfo.ExternalMFAURL, c.ExternalMFAInfo.ExternalMFASecret, c.ExternalMFAInfo.ExternalMFATimeout, mfaClient)
+
+		// create controllers:
+		loginCtrl := controller.NewLoginController(loginSvc, externalMFASvc, sessionSvc, logSvc, http.FileServer(http.Dir(c.Web.HTTPS)), crudSvc)
+
+		// create listeners:
+		loginListener := make(channel.Listener)
+
+		// allow cors:
+		if c.AllowCors {
+			cors := func(next http.Handler) http.Handler {
+				return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+					w.Header().Set("access-control-allow-origin", r.Header.Get("Origin"))
+					w.Header().Set("access-control-allow-methods", "GET, PUT, POST, DELETE")
+					w.Header().Set("access-control-allow-credentials", "true")
+					w.Header().Set("access-control-allow-headers", r.Header.Get("Access-Control-Request-Headers"))
+
+					if r.Method == "OPTIONS" {
+						w.WriteHeader(200)
+						return
+					}
+
+					next.ServeHTTP(w, r)
+				})
+			}
+			loginCtrl = cors(loginCtrl)
+		}
+
+		// log requests
+		if c.LogRequests {
+			logRequests := func(next http.Handler) http.Handler {
+				return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+					logger.Infof("%s %s %s", r.Method, r.RequestURI, r.RemoteAddr)
+					next.ServeHTTP(w, r)
+				})
+			}
+			loginCtrl = logRequests(loginCtrl)
+		}
+
+		go http.Serve(loginListener, loginCtrl)
 
 		// ********************** here is the login logic from main in idac ******************************
 

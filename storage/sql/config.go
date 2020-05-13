@@ -16,8 +16,8 @@ import (
 	"github.com/lib/pq"
 	sqlite3 "github.com/mattn/go-sqlite3"
 
-	"github.com/dexidp/dex/pkg/log"
-	"github.com/dexidp/dex/storage"
+	"github.com/cyolo-core/cmd/dex/pkg/log"
+	"github.com/cyolo-core/cmd/dex/storage"
 )
 
 const (

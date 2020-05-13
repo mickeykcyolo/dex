@@ -2,7 +2,7 @@ package service
 
 import (
 	"fmt"
-	"github.com/cyolo-core/cmd/idac/repo"
+	"github.com/cyolo-core/cmd/dex/repo"
 )
 
 // LogService allows creating entries in the log.

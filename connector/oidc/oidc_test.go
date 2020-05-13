@@ -19,7 +19,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"gopkg.in/square/go-jose.v2"
 
-	"github.com/dexidp/dex/connector"
+	"github.com/cyolo-core/cmd/dex/connector"
 )
 
 func TestKnownBrokenAuthHeaderProvider(t *testing.T) {

@@ -2,12 +2,13 @@
 package memory
 
 import (
+	"database/sql"
 	"strings"
 	"sync"
 	"time"
 
-	"github.com/dexidp/dex/pkg/log"
-	"github.com/dexidp/dex/storage"
+	"github.com/cyolo-core/cmd/dex/pkg/log"
+	"github.com/cyolo-core/cmd/dex/storage"
 )
 
 // New returns an in memory storage.
@@ -64,6 +65,9 @@ func (s *memStorage) tx(f func()) {
 }
 
 func (s *memStorage) Close() error { return nil }
+
+func (s *memStorage) GetDBIfExists() *sql.DB { return nil }
+
 
 func (s *memStorage) GarbageCollect(now time.Time) (result storage.GCResult, err error) {
 	s.tx(func() {

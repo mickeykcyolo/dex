@@ -2,6 +2,7 @@ package storage
 
 import (
 	"crypto/rand"
+	"database/sql"
 	"encoding/base32"
 	"errors"
 	"io"
@@ -45,6 +46,7 @@ type GCResult struct {
 // support timezones or standardize on UTC.
 type Storage interface {
 	Close() error
+	GetDBIfExists() *sql.DB // returns the db connection if it's a db
 
 	// TODO(ericchiang): Let the storages set the IDs of these objects.
 	CreateAuthRequest(a AuthRequest) error
