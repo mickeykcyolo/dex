@@ -41,13 +41,13 @@ func (ctrl baseController) RetrieveSession(r *http.Request) (session *model.Sess
 // Method = {GET}
 // Path = /v1/users/me
 // Produces = application/json
-func (ctrl baseGuacTunnelController) Me(w http.ResponseWriter, r *http.Request) {
-	if session := ctrl.UpsertSession(w, r); session.User.Name == "anonymous" {
-		encode(403, session.User, w, r)
-	} else {
-		encode(200, session.User, w, r)
-	}
-}
+//func (ctrl baseGuacTunnelController) Me(w http.ResponseWriter, r *http.Request) {
+//	if session := ctrl.UpsertSession(w, r); session.User.Name == "anonymous" {
+//		encode(403, session.User, w, r)
+//	} else {
+//		encode(200, session.User, w, r)
+//	}
+//}
 
 // DestroySession destroys the session (if exists) for request r.
 func (ctrl baseController) DestroySession(w http.ResponseWriter, r *http.Request) {

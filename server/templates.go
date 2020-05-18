@@ -80,7 +80,7 @@ func loadWebConfig(c webConfig) (static, theme http.Handler, templates *template
 		c.issuer = "dex"
 	}
 	if c.dir == "" {
-		c.dir = "./web"
+		c.dir = "../../web"
 	}
 	if c.logoURL == "" {
 		c.logoURL = "theme/logo.png"

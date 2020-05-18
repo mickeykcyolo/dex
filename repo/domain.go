@@ -2,7 +2,7 @@ package repo
 
 import (
 	"database/sql"
-	"github.com/cyolo-core/cmd/idac/model"
+	"github.com/cyolo-core/cmd/dex/model"
 )
 
 // DomainRepository is a repo for domain objects.

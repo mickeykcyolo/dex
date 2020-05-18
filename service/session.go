@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"github.com/cyolo-core/cmd/idac/model"
+	"github.com/cyolo-core/cmd/dex/model"
 	"sync"
 	"time"
 )

@@ -7,11 +7,11 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/dexidp/dex/api"
-	"github.com/dexidp/dex/pkg/log"
-	"github.com/dexidp/dex/server/internal"
-	"github.com/dexidp/dex/storage"
-	"github.com/dexidp/dex/version"
+	"github.com/cyolo-core/cmd/dex/api"
+	"github.com/cyolo-core/cmd/dex/pkg/log"
+	"github.com/cyolo-core/cmd/dex/server/internal"
+	"github.com/cyolo-core/cmd/dex/storage"
+	"github.com/cyolo-core/cmd/dex/version"
 )
 
 // apiVersion increases every time a new call is added to the API. Clients should use this info

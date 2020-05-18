@@ -10,9 +10,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/dexidp/dex/connector"
+	"github.com/cyolo-core/cmd/dex/connector"
 
-	"github.com/dexidp/dex/storage/kubernetes/k8sapi"
+	"github.com/cyolo-core/cmd/dex/storage/kubernetes/k8sapi"
 
 	"github.com/sirupsen/logrus"
 	"golang.org/x/oauth2"

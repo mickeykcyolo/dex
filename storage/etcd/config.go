@@ -7,8 +7,8 @@ import (
 	"go.etcd.io/etcd/clientv3/namespace"
 	"go.etcd.io/etcd/pkg/transport"
 
-	"github.com/dexidp/dex/pkg/log"
-	"github.com/dexidp/dex/storage"
+	"github.com/cyolo-core/cmd/dex/pkg/log"
+	"github.com/cyolo-core/cmd/dex/storage"
 )
 
 var (

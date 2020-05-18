@@ -9,7 +9,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/dexidp/dex/connector"
+	"github.com/cyolo-core/cmd/dex/connector"
 )
 
 type testResponse struct {

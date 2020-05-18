@@ -2,9 +2,11 @@ issuer: http://127.0.0.1:5556/dex
 storage:
   type: sqlite3
   config:
-    file: examples/dex.db
+    file: ../../examples/dex.db
 web:
-  http: 0.0.0.0:5556
+  https: 0.0.0.0:5556
+  tlsCert: ../../../../dev/certs/cert.pem
+  tlsKey:  ../../../../dev/certs/key.pem
 
 connectors:
 - type: ldap

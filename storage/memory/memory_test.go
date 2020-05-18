@@ -6,8 +6,8 @@ import (
 
 	"github.com/sirupsen/logrus"
 
-	"github.com/dexidp/dex/storage"
-	"github.com/dexidp/dex/storage/conformance"
+	"github.com/cyolo-core/cmd/dex/storage"
+	"github.com/cyolo-core/cmd/dex/storage/conformance"
 )
 
 func TestStorage(t *testing.T) {

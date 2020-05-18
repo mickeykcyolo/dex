@@ -2,6 +2,7 @@ package kubernetes
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 	"fmt"
 	"strings"
@@ -242,6 +243,8 @@ func (cli *client) CreateOfflineSessions(o storage.OfflineSessions) error {
 func (cli *client) CreateConnector(c storage.Connector) error {
 	return cli.post(resourceConnector, cli.fromStorageConnector(c))
 }
+
+func (cli *client) GetDBIfExists() *sql.DB { return nil }
 
 func (cli *client) GetAuthRequest(id string) (storage.AuthRequest, error) {
 	var req AuthRequest

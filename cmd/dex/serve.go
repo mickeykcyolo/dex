@@ -312,12 +312,17 @@ func serve(cmd *cobra.Command, args []string) error {
 
 		// open local database:
 		db := s.GetDBIfExists()
-		if db != nil {
+		if db == nil {
 			logger.Error("failed to get the current database")
 			os.Exit(2)
 		}
 
-		//var logsRepo repo.LogEntryRepository
+		// create http client for external mfa:
+		mfaClient := &http.Client{
+			Transport: &http.Transport{
+				//TLSClientConfig: &tls.Config{Certificates: config.Certificates, InsecureSkipVerify: cfg.Insecure},
+			},
+		}
 
 		// create repositories:
 		usersRepo := repo.NewSQLUserRepository(db)
@@ -354,6 +359,7 @@ func serve(cmd *cobra.Command, args []string) error {
 						w.WriteHeader(200)
 						return
 					}
+
 
 					next.ServeHTTP(w, r)
 				})

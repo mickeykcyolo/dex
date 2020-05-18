@@ -12,11 +12,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/dexidp/dex/connector"
-	"github.com/dexidp/dex/pkg/groups"
-	"github.com/dexidp/dex/pkg/log"
+	"github.com/cyolo-core/cmd/dex/connector"
+	"github.com/cyolo-core/cmd/dex/pkg/groups"
+	"github.com/cyolo-core/cmd/dex/pkg/log"
 
-	"github.com/dexidp/dex/storage/kubernetes/k8sapi"
+	"github.com/cyolo-core/cmd/dex/storage/kubernetes/k8sapi"
 
 	"golang.org/x/oauth2"
 )

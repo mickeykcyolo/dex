@@ -27,7 +27,7 @@ type Session struct {
 func GenerateSession(user *User) *Session {
 	now := time.Now()
 	return &Session{
-		Id:    uuid.Must(uuid.NewV4()).String(),
+		Id:    uuid.Must(uuid.NewV4(), nil).String(),
 		User:  user,
 		Ctime: now,
 		Atime: now,

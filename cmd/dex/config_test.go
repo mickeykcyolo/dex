@@ -7,11 +7,11 @@ import (
 	"github.com/ghodss/yaml"
 	"github.com/kylelemons/godebug/pretty"
 
-	"github.com/dexidp/dex/connector/mock"
-	"github.com/dexidp/dex/connector/oidc"
-	"github.com/dexidp/dex/server"
-	"github.com/dexidp/dex/storage"
-	"github.com/dexidp/dex/storage/sql"
+	"github.com/cyolo-core/cmd/dex/connector/mock"
+	"github.com/cyolo-core/cmd/dex/connector/oidc"
+	"github.com/cyolo-core/cmd/dex/server"
+	"github.com/cyolo-core/cmd/dex/storage"
+	"github.com/cyolo-core/cmd/dex/storage/sql"
 )
 
 var _ = yaml.YAMLToJSON

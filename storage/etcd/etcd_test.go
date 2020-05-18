@@ -12,8 +12,8 @@ import (
 	"github.com/sirupsen/logrus"
 	"go.etcd.io/etcd/clientv3"
 
-	"github.com/dexidp/dex/storage"
-	"github.com/dexidp/dex/storage/conformance"
+	"github.com/cyolo-core/cmd/dex/storage"
+	"github.com/cyolo-core/cmd/dex/storage/conformance"
 )
 
 func withTimeout(t time.Duration, f func()) {

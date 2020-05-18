@@ -2,6 +2,7 @@ package etcd
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"strings"
@@ -9,8 +10,8 @@ import (
 
 	"go.etcd.io/etcd/clientv3"
 
-	"github.com/dexidp/dex/pkg/log"
-	"github.com/dexidp/dex/storage"
+	"github.com/cyolo-core/cmd/dex/pkg/log"
+	"github.com/cyolo-core/cmd/dex/storage"
 )
 
 const (
@@ -80,6 +81,8 @@ func (c *conn) CreateAuthRequest(a storage.AuthRequest) error {
 	defer cancel()
 	return c.txnCreate(ctx, keyID(authRequestPrefix, a.ID), fromStorageAuthRequest(a))
 }
+
+func (c *conn) GetDBIfExists() *sql.DB { return nil }
 
 func (c *conn) GetAuthRequest(id string) (a storage.AuthRequest, err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), defaultStorageTimeout)

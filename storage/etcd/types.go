@@ -5,7 +5,7 @@ import (
 
 	jose "gopkg.in/square/go-jose.v2"
 
-	"github.com/dexidp/dex/storage"
+	"github.com/cyolo-core/cmd/dex/storage"
 )
 
 // AuthCode is a mirrored struct from storage with JSON struct tags
